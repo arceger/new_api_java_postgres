@@ -28,7 +28,7 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 1. Clone o repositório:
 
     ```sh
-    git clone https://github.com/seuusuario/newsalesapi.git
+    git clone https://github.com/arceger/new_api_java_postgres.git
     cd newsalesapi
     ```
 
