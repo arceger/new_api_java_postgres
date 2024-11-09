@@ -1,4 +1,5 @@
 package com.over.newsalesapi.model;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

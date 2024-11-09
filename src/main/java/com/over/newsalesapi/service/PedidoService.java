@@ -6,9 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.over.newsalesapi.model.Pedido;
+import com.over.newsalesapi.model.Item;
+import com.over.newsalesapi.model.Usuario;
+import com.over.newsalesapi.model.StatusPedido;
 import com.over.newsalesapi.repository.PedidoRepository;
 import com.over.newsalesapi.repository.StockMovementRepository;
+import com.over.newsalesapi.repository.ItemRepository;
+import com.over.newsalesapi.repository.UsuarioRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +32,23 @@ public class PedidoService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @Transactional
     public Pedido criarPedido(Pedido pedido) {
+        // Carregando detalhes completos de Item e Usuario
+        Item item = itemRepository.findById(pedido.getItem().getId()).orElseThrow(() -> new RuntimeException("Item não encontrado"));
+        Usuario usuario = usuarioRepository.findById(pedido.getUsuario().getId()).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+        pedido.setItem(item);
+        pedido.setUsuario(usuario);
+
+        // Definindo a data de criação do pedido para a data/hora atual do sistema
+        pedido.setCreationDate(LocalDateTime.now());
+
         Pedido novoPedido = pedidoRepository.save(pedido);
         verificarEstoque(novoPedido);
         return novoPedido;
@@ -67,19 +88,32 @@ public class PedidoService {
 
         if (estoqueDisponivel >= quantidadeNecessaria) {
             stockMovementRepository.debitarEstoque(pedido.getItem().getId(), quantidadeNecessaria);
+            pedido.setStatus(StatusPedido.COMPLETO); 
             enviarEmailPedidoCompleto(pedido);
             logger.info("Pedido {} completo e email enviado para {}", pedido.getId(), pedido.getUsuario().getEmail());
         } else {
+            pedido.setStatus(StatusPedido.PENDENTE); 
             logger.warn("Estoque insuficiente para atender o pedido {}: necessário {} mas disponível {}", 
                 pedido.getId(), quantidadeNecessaria, estoqueDisponivel);
         }
+
+        pedidoRepository.save(pedido);
     }
 
     private void enviarEmailPedidoCompleto(Pedido pedido) {
+
+        logger.info("SEU PEDIDO FOI PROCESSADO.."+pedido.getUsuario());
         emailService.sendSimpleMessage(
             pedido.getUsuario().getEmail(),
             "Pedido Completo",
             "Seu pedido foi completado!"
+            
         );
     }
 }
+
+
+
+
+
+
