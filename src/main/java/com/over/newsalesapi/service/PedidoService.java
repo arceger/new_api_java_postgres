@@ -46,7 +46,6 @@ public class PedidoService {
         pedido.setItem(item);
         pedido.setUsuario(usuario);
 
-        // Definindo a data de criação do pedido para a data/hora atual do sistema
         pedido.setCreationDate(LocalDateTime.now());
 
         Pedido novoPedido = pedidoRepository.save(pedido);

@@ -6,9 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.over.newsalesapi.model.Usuario;
 import com.over.newsalesapi.service.UsuarioService;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/usuarios")

@@ -66,8 +66,7 @@ public class PedidoController {
 
     @PostMapping("/estoque/adicionar")
     public ResponseEntity<Void> adicionarMovimentoDeEstoque(@RequestParam Long itemId, @RequestParam int quantidade) {
-        // Supondo que exista um método para obter Item por ID (adicione se necessário)
-        Optional<Item> itemOptional = Optional.of(new Item()); // Substituir pelo método real para buscar o item
+        Optional<Item> itemOptional = Optional.of(new Item());
         itemOptional.ifPresent(item -> {
             item.setId(itemId);
             stockMovementService.adicionarMovimentoDeEstoque(item, quantidade);
