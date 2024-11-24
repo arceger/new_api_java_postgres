@@ -1,6 +1,9 @@
 package com.over.newsalesapi.repository;
 
+import javax.persistence.LockModeType;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +13,7 @@ import com.over.newsalesapi.model.StockMovement;
 
 @Repository
 public interface StockMovementRepository extends JpaRepository<StockMovement, Long> {
-
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT COUNT(sm) FROM StockMovement sm WHERE sm.item.id = :itemId")
     int findEstoquePorItem(@Param("itemId") Long itemId);
 
