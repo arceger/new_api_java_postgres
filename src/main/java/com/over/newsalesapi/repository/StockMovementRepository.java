@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.over.newsalesapi.model.StockMovement;
 
+
+
 @Repository
 public interface StockMovementRepository extends JpaRepository<StockMovement, Long> {
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    //@Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT COUNT(sm) FROM StockMovement sm WHERE sm.item.id = :itemId")
     int findEstoquePorItem(@Param("itemId") Long itemId);
 
