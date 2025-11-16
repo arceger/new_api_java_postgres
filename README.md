@@ -16,10 +16,22 @@ Crie um banco de dados no PostgreSQL com o nome `newsalesapi`.
 
 ### Configurações do `application.properties`
 
+Este projeto ignora o arquivo real `src/main/resources/application.properties` no Git para evitar expor credenciais.
+
+1. Copie o arquivo de exemplo e ajuste conforme seu ambiente:
+
+    ```sh
+    cp src/main/resources/application.properties.example src/main/resources/application.properties
+    ```
+
+2. Edite `src/main/resources/application.properties` preenchendo usuário, senha e demais variáveis.
+
+O arquivo de exemplo contém chaves como:
+
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/newsalesapi
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
+spring.datasource.username=SEU_USUARIO
+spring.datasource.password=SUA_SENHA
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
@@ -49,7 +61,7 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ### 1. Usuários (User)
 
 #### Criar Usuário
-- **URL:** `POST /usuarios`
+- **URL:** `POST http://localhost:8080/usuarios`
 
 **Exemplo de Requisição:**
 
@@ -61,13 +73,13 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 
 #### Obter Usuário por ID
-- **URL:** `GET /usuarios/{id}`
+- **URL:** `GET http://localhost:8080/usuarios/{id}`
 
 #### Listar Todos os Usuários
-- **URL:** `GET /usuarios`
+- **URL:** `GET http://localhost:8080/usuarios`
 
 #### Atualizar Usuário
-- **URL:** `PUT /usuarios/{id}`
+- **URL:** `PUT http://localhost:8080/usuarios/{id}`
 
 **Exemplo de Requisição:**
 
@@ -79,14 +91,14 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 
 #### Deletar Usuário
-- **URL:** `DELETE /usuarios/{id}`
+- **URL:** `DELETE http://localhost:8080/usuarios/{id}`
 
 ---
 
 ### 2. Itens (Item)
 
 #### Criar Item
-- **URL:** `POST /itens`
+- **URL:** `POST http://localhost:8080/itens`
 
 **Exemplo de Requisição:**
 
@@ -97,13 +109,13 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 
 #### Obter Item por ID
-- **URL:** `GET /itens/{id}`
+- **URL:** `GET http://localhost:8080/itens/{id}`
 
 #### Listar Todos os Itens
-- **URL:** `GET /itens`
+- **URL:** `GET http://localhost:8080/itens`
 
 #### Atualizar Item
-- **URL:** `PUT /itens/{id}`
+- **URL:** `PUT http://localhost:8080/itens/{id}`
 
 **Exemplo de Requisição:**
 
@@ -114,14 +126,14 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 
 #### Deletar Item
-- **URL:** `DELETE /itens/{id}`
+- **URL:** `DELETE http://localhost:8080/itens/{id}`
 
 ---
 
 ### 3. Movimentos de Estoque (StockMovement)
 
 #### Adicionar Movimento de Estoque
-- **URL:** `POST /itens/estoque/adicionar`
+- **URL:** `POST http://localhost:8080/itens/estoque/adicionar`
 
 **Parâmetros:**
 - `itemId` (Long) - ID do Item
@@ -130,7 +142,7 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 **Exemplo de Requisição:**
 
 ```sh
-POST /itens/estoque/adicionar?itemId=1&quantidade=50
+POST http://localhost:8080/itens/estoque/adicionar?itemId=1&quantidade=50
 ```
 
 ---
@@ -138,7 +150,7 @@ POST /itens/estoque/adicionar?itemId=1&quantidade=50
 ### 4. Pedidos (Order)
 
 #### Criar Pedido
-- **URL:** `POST /pedidos`
+- **URL:** `POST http://localhost:8080/pedidos`
 
 **Exemplo de Requisição:**
 
@@ -155,13 +167,13 @@ POST /itens/estoque/adicionar?itemId=1&quantidade=50
 ```
 
 #### Obter Pedido por ID
-- **URL:** `GET /pedidos/{id}`
+- **URL:** `GET http://localhost:8080/pedidos/{id}`
 
 #### Listar Todos os Pedidos
-- **URL:** `GET /pedidos`
+- **URL:** `GET http://localhost:8080/pedidos`
 
 #### Atualizar Pedido
-- **URL:** `PUT /pedidos/{id}`
+- **URL:** `PUT http://localhost:8080/pedidos/{id}`
 
 **Exemplo de Requisição:**
 
@@ -178,7 +190,7 @@ POST /itens/estoque/adicionar?itemId=1&quantidade=50
 ```
 
 #### Deletar Pedido
-- **URL:** `DELETE /pedidos/{id}`
+- **URL:** `DELETE http://localhost:8080/pedidos/{id}`
 
 ---
 
